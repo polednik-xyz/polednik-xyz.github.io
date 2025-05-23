@@ -11,7 +11,7 @@
     
     <header>
         <nav>
-            <div class="logo">daniel poledník</div>
+            <a href="#hero" class="logo">daniel poledník</a>
             <ul class="nav-links">
                 <li><a href="#about">o mně</a></li>
                 <li><a href="#skills">dovednosti</a></li>
@@ -21,120 +21,173 @@
         </nav>
     </header>
 
-    <section class="hero">
+    <section id="hero" class="hero">
+        <div class="floating-code">
+            <span>&lt;/html&gt;</span>
+            <span>function()</span>
+            <span>console.log</span>
+            <span>{code}</span>
+            <span>import</span>
+            <span>def main():</span>
+            <span>&lt;div&gt;</span>
+            <span>return</span>
+            <span>if __name__</span>
+            <span>const data</span>
+            <span>async/await</span>
+            <span>npm install</span>
+        </div>
+        <div class="binary-rain">
+            <span>010101</span>
+            <span>110010</span>
+            <span>101011</span>
+            <span>010110</span>
+            <span>111000</span>
+            <span>001101</span>
+            <span>100110</span>
+            <span>011001</span>
+        </div>
+        <div class="floating-particles"></div>
+        <div class="grid-overlay"></div>
+        <div class="terminal-cursor"></div>
+        <div class="scan-lines"></div>
         <div class="hero-content">
             <h1>daniel poledník</h1>
-            <p>student it • tvůrce obsahu • developer • it nadšenec</p>
-            <a href="#about" class="cta-button">objevit více</a>
+            <p class="typing-text">student it • tvůrce obsahu • developer • it nadšenec</p>
+            <a href="#about" class="cta-button">
+                <span>objevit více</span>
+                <div class="button-glow"></div>
+            </a>
         </div>
     </section>
 
-    <section id="about" class="container">
-        <h2>o mně</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>student 2. ročníku gymnázia se zaměřením na informační technologie a kybernetiku.</p>
-                <p>spojuji technické dovednosti s kreativní tvorbou – od vývoje webů a ai aplikací po tvorbu obsahu a hudební produkci.</p>
-                <p>mám zkušenosti s týmovými projekty, hackathony a vlastními iniciativami v oblasti technologií.</p>
-            </div>
-            <div class="about-stats">
-                <div class="skill-item">
-                    <h3>🏆 úspěchy</h3>
-                    <p>5. místo na mezinárodním at&t online hackathonu 2025</p>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">o mně</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="fade-in-text">student 2. ročníku gymnázia se zaměřením na informační technologie a kybernetiku.</p>
+                    <p class="fade-in-text">spojuji technické dovednosti s kreativní tvorbou – od vývoje webů a ai aplikací po tvorbu obsahu a hudební produkci.</p>
+                    <p class="fade-in-text">mám zkušenosti s týmovými projekty, hackathony a vlastními iniciativami v oblasti technologií.</p>
                 </div>
-                <div class="skill-item">
-                    <h3>🎯 zaměření</h3>
-                    <p>fullstack development • ai integrace • tvorba obsahu</p>
+                <div class="about-stats">
+                    <div class="skill-item floating-card">
+                        <div class="card-glow"></div>
+                        <h3>🏆 úspěchy</h3>
+                        <p>5. místo na mezinárodním at&t online hackathonu 2025</p>
+                    </div>
+                    <div class="skill-item floating-card">
+                        <div class="card-glow"></div>
+                        <h3>🎯 zaměření</h3>
+                        <p>fullstack development • ai integrace • tvorba obsahu</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="container">
-        <h2>dovednosti</h2>
-        <div class="skills-grid">
-            <div class="skill-item">
-                <h3>💻 programování</h3>
-                <p>python, c#, flask, html, css, javascript, tailwind</p>
-                <p>vývoj webů, api integrace, kyberbezpečnost</p>
-            </div>
-            <div class="skill-item">
-                <h3>🤖 ai & detekce</h3>
-                <p>frigate, object detection, ai experimenty</p>
-                <p>automatizace, data analýza</p>
-            </div>
-            <div class="skill-item">
-                <h3>🎥 tvorba obsahu</h3>
-                <p>youtube kanál "za odznakem"</p>
-                <p>scénáře, voice-over, střih, moderování</p>
-            </div>
-            <div class="skill-item">
-                <h3>🎧 hudební produkce</h3>
-                <p>domácí studio, mixing & mastering</p>
-                <p>ai experimenty v hudbě</p>
-            </div>
-            <div class="skill-item">
-                <h3>💰 kryptoměny</h3>
-                <p>investiční strategie, portfolio management</p>
-                <p>sledování trendů, analýza trhu</p>
-            </div>
-            <div class="skill-item">
-                <h3>🌐 webové stránky</h3>
-                <p>tvorba webů na zakázku - portfolia, firemní weby</p>
-                <p>responsivní design, moderní technologie</p>
-            </div>
-            <div class="skill-item">
-                <h3>🎤 prezentace</h3>
-                <p>moderování akcí, týmová spolupráce</p>
-                <p>hackathony, veřejná vystoupení</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="container">
-        <h2>projekty</h2>
-        <div class="projects-grid">
-            <div class="project-item">
-                <h3>🏆 at&t hackathon online 2025</h3>
-                <p>5. místo na mezinárodní soutěži</p>
-                <p>týmový projekt s ai integrací</p>
-            </div>
-            <div class="project-item">
-                <h3>💰 flowie ai</h3>
-                <p>chytrý finanční asistent</p>
-                <p>python backend, ai api, hackathon projekt</p>
-            </div>
-            <div class="project-item">
-                <h3>🎥 za odznakem</h3>
-                <p>youtube kanál o policejních zákrocích</p>
-                <p>scénáře, komentáře, napínavá videa, 10 milionů zhlednutí napříč platformami</p>
-            </div>
-            <div class="project-item">
-                <h3>🔒 kyberbezpečnost</h3>
-                <p>testování vulnerabilit, analýzy</p>
-                <p>bezpečnostní projekty a experimenty</p>
-            </div>
-            <div class="project-item">
-                <h3>🎵 hudební produkce</h3>
-                <p>mastering, mixing</p>
-                <p>ai experimenty ve zvuku, rvc</p>
-            </div>
-            <div class="project-item">
-                <h3>🌐 webové aplikace</h3>
-                <p>fullstack projekty</p>
-                <p>moderní technologie, responsivní design</p>
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">dovednosti</h2>
+            <div class="skills-grid">
+                <div class="skill-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>💻 programování</h3>
+                    <p>python, c#, flask, html, css, javascript, tailwind</p>
+                    <p>vývoj webů, api integrace, kyberbezpečnost</p>
+                </div>
+                <div class="skill-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🌐 webové stránky</h3>
+                    <p>tvorba webů na zakázku - portfolia, firemní weby</p>
+                    <p>responsivní design, moderní technologie</p>
+                </div>
+                <div class="skill-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🤖 ai & detekce</h3>
+                    <p>frigate, object detection, ai experimenty</p>
+                    <p>automatizace, data analýza</p>
+                </div>
+                <div class="skill-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🎥 tvorba obsahu</h3>
+                    <p>youtube kanál "za odznakem"</p>
+                    <p>scénáře, voice-over, střih, moderování</p>
+                </div>
+                <div class="skill-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🎧 hudební produkce</h3>
+                    <p>domácí studio, mixing & mastering</p>
+                    <p>ai experimenty v hudbě, rvc</p>
+                </div>
+                <div class="skill-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🎤 prezentace</h3>
+                    <p>moderování akcí, týmová spolupráce</p>
+                    <p>hackathony, veřejná vystoupení</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="container">
-        <h2>kontakt</h2>
-        <div class="contact-content">
-            <p>zaujal tě můj profil? spojme se a vytvořme něco úžasného společně.</p>
-            <p>rád tvořím webové stránky jako zakázky - od jednoduchých portfolií po komplexní webové aplikace.</p>
-            <div class="contact-links">
-                <a href="https://github.com/polednik-xyz" target="_blank">github</a>
-                <a href="https://www.linkedin.com/in/daniel-poledn%C3%ADk-7aa5152a4/" target="_blank">linkedin</a>
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">projekty</h2>
+            <div class="projects-grid">
+                <div class="project-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🏆 at&t hackathon online 2025</h3>
+                    <p>5. místo na mezinárodní soutěži</p>
+                    <p>týmový projekt s ai integrací</p>
+                </div>
+                <div class="project-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🎥 za odznakem</h3>
+                    <p>youtube kanál o policejních zákrocích</p>
+                    <p>10 milionů zhlednutí napříč platformami</p>
+                </div>
+                <div class="project-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>💰 flowie ai</h3>
+                    <p>chytrý finanční asistent</p>
+                    <p>python backend, ai api integrace</p>
+                </div>
+                <div class="project-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🌐 portfolia & weby</h3>
+                    <p>zakázkové webové stránky</p>
+                    <p>responsivní design, fullstack řešení</p>
+                </div>
+                <div class="project-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🔒 kyberbezpečnost</h3>
+                    <p>testování vulnerabilit a analýzy</p>
+                    <p>bezpečnostní projekty a experimenty</p>
+                </div>
+                <div class="project-item floating-card">
+                    <div class="card-glow"></div>
+                    <h3>🎵 hudební produkce</h3>
+                    <p>mastering a mixing projektů</p>
+                    <p>ai experimenty ve zvuku</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">kontakt</h2>
+            <div class="contact-content">
+                <p class="fade-in-text">zaujal tě můj profil? spojme se a vytvořme něco úžasného společně.</p>
+                <div class="contact-links">
+                    <a href="https://github.com/polednik-xyz" target="_blank" class="contact-button">
+                        <span>github</span>
+                        <div class="button-glow"></div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/daniel-poledn%C3%ADk-7aa5152a4/" target="_blank" class="contact-button">
+                        <span>linkedin</span>
+                        <div class="button-glow"></div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
