@@ -378,46 +378,11 @@ nav {
     transform: translateY(-2px);
 }
 
-.player-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #333, #666, #333);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    animation: vinylRotate 4s linear infinite;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.player-icon::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-    background: #000000;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-
-.player-icon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 4px;
-    height: 4px;
-    background: #ffffff;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-}
-
-.player-icon.paused {
-    animation-play-state: paused;
+.player-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .track-info {
@@ -425,7 +390,6 @@ nav {
     flex-direction: column;
     gap: 0.2rem;
     position: relative;
-    flex: 1;
 }
 
 .info-icon {
@@ -492,19 +456,6 @@ nav {
 .tooltip strong {
     color: #ffffff;
     font-weight: 500;
-}
-
-.player-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.track-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
 }
 
 .track-title {
