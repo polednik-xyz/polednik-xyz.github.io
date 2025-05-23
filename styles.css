@@ -1205,10 +1205,7 @@ footer {
     }
     
     .music-player {
-        bottom: 10px;
-        left: 10px;
-        min-width: 280px;
-        padding: 0.8rem;
+        display: none;
     }
     
     .tooltip {
@@ -1246,12 +1243,7 @@ footer {
     }
     
     .music-player {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        margin: 1rem;
-        min-width: auto;
-        width: calc(100% - 2rem);
+        display: none;
     }
     
     .tooltip {
@@ -1277,6 +1269,10 @@ footer {
 
 /* Hide cursor on touch devices */
 @media (hover: none) and (pointer: coarse) {
+    .music-player {
+        display: none;
+    }
+    
     .custom-cursor {
         display: none;
     }
