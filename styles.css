@@ -417,68 +417,9 @@ nav {
 }
 
 /* ===================================
-   CUSTOM CURSOR - THEME AWARE
-   =================================== */
-.custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 10000;
-}
-
-.cursor-inner {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: var(--accent-primary);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10001;
-    box-shadow: 0 0 10px var(--accent-glow);
-    will-change: transform;
-    transition: transform 0.05s ease-out, background-color 0.3s ease;
-}
-
-.cursor-outer {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--border-primary);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10000;
-    background: radial-gradient(circle, var(--overlay-heavy) 0%, transparent 70%);
-    backdrop-filter: blur(2px);
-    will-change: transform;
-    transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-.cursor-hover .cursor-inner {
-    transform: translate(-50%, -50%) scale(1.5);
-    background: var(--accent-secondary);
-    box-shadow: 0 0 20px var(--accent-primary);
-}
-
-.cursor-hover .cursor-outer {
-    border-color: var(--border-hover);
-    background: radial-gradient(circle, var(--overlay-heavy) 0%, transparent 70%);
-    transform: translate(-50%, -50%) scale(1.3);
-}
-
-.cursor-click .cursor-inner {
-    transform: translate(-50%, -50%) scale(0.5);
-}
-
-.cursor-click .cursor-outer {
-    transform: translate(-50%, -50%) scale(1.8);
-    opacity: 0.6;
-}
-
-/* ===================================
    MUSIC PLAYER - THEME AWARE
    =================================== */
-.music-player {
+   .music-player {
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -507,149 +448,154 @@ nav {
 }
 
 .player-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.8rem;
+    width: 100%;
 }
 
 .track-info {
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+    align-items: center;
+    gap: 0.8rem;
     position: relative;
 }
 
 .info-icon {
-    position: absolute;
-    top: 0;
-    right: -25px;
-    font-size: 0.9rem;
-    opacity: 0.7;
-    cursor: none;
+    font-size: 16px;
+    cursor: pointer;
     transition: all 0.3s ease;
-    padding: 2px;
+    position: relative;
+    padding: 4px;
     border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-secondary);
 }
 
 .info-icon:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: scale(1.1);
 }
 
 .tooltip {
     position: absolute;
-    bottom: 30px;
-    right: -90px;
-    background: rgba(10, 10, 10, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    padding: 1rem;
-    font-size: 0.75rem;
-    line-height: 1.5;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px) scale(0.9);
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     z-index: 1001;
-    backdrop-filter: blur(15px);
-    box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-primary);
+    box-shadow: 0 8px 20px var(--shadow-heavy);
+    backdrop-filter: blur(10px);
     min-width: 200px;
-    color: rgba(255, 255, 255, 0.9);
+    white-space: normal;
+    max-width: 280px;
 }
 
 .tooltip::before {
     content: '';
     position: absolute;
-    bottom: -6px;
-    right: 15px;
-    width: 12px;
-    height: 12px;
-    background: rgba(10, 10, 10, 0.98);
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transform: rotate(45deg);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--bg-tertiary);
 }
 
 .info-icon:hover .tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0) scale(1);
+    transform: translateX(-50%) translateY(-5px);
 }
 
 .tooltip strong {
-    color: #ffffff;
-    font-weight: 500;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .track-title {
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.025em;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    flex: 1;
 }
 
 .track-artist {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8rem;
-    letter-spacing: 0.025em;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    opacity: 0.9;
 }
 
 .player-controls {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 1rem;
+    width: 100%;
 }
 
 .play-btn {
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    width: 32px;
-    height: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem;
+    cursor: pointer;
     transition: all 0.3s ease;
-    cursor: none;
+    font-size: 16px;
+    color: var(--text-primary);
     backdrop-filter: blur(10px);
 }
 
 .play-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.4);
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
     transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px var(--accent-glow);
 }
 
 .play-btn.playing {
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border-color: var(--accent-primary);
 }
 
 .progress-bar {
     flex: 1;
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--border-secondary);
     border-radius: 2px;
-    position: relative;
     overflow: hidden;
-    cursor: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.progress-bar:hover {
+    height: 6px;
+    background: var(--border-primary);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.8));
-    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
     width: 0%;
     transition: width 0.1s ease;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .volume-control {
@@ -659,48 +605,124 @@ nav {
 }
 
 .volume-icon {
-    font-size: 0.8rem;
-    opacity: 0.7;
+    font-size: 14px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.volume-icon:hover {
+    color: var(--text-primary);
+    transform: scale(1.1);
 }
 
 .volume-slider {
     width: 60px;
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--border-secondary);
     border-radius: 2px;
     outline: none;
-    cursor: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
 }
 
 .volume-slider::-webkit-slider-thumb {
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
-    border-radius: 50%;
-    cursor: none;
     -webkit-appearance: none;
     appearance: none;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    width: 14px;
+    height: 14px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 0 8px var(--accent-glow);
 }
 
 .volume-slider::-webkit-slider-thumb:hover {
     transform: scale(1.2);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px var(--accent-glow);
 }
 
 .volume-slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
+    width: 14px;
+    height: 14px;
+    background: var(--accent-primary);
     border-radius: 50%;
-    cursor: none;
+    cursor: pointer;
     border: none;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px var(--accent-glow);
+    transition: all 0.3s ease;
 }
 
+.volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.volume-slider::-moz-range-track {
+    background: var(--border-secondary);
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+}
+
+.volume-slider:hover {
+    background: var(--border-primary);
+}
+
+/* Better contrast for light theme */
+body.light-theme .track-title {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+body.light-theme .track-artist {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+body.light-theme .play-btn {
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border-color: var(--border-primary);
+}
+
+body.light-theme .play-btn.playing {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+body.light-theme .volume-icon {
+    color: var(--text-secondary);
+}
+
+body.light-theme .volume-icon:hover {
+    color: var(--text-primary);
+}
+
+body.light-theme .tooltip {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-primary);
+}
+
+body.light-theme .tooltip::before {
+    border-top-color: var(--bg-tertiary);
+}
+
+body.light-theme .info-icon {
+    background: var(--bg-card);
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
+}
+
+body.light-theme .info-icon:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
 /* ===================================
    ANIMATED BACKGROUND ELEMENTS
    =================================== */
