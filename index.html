@@ -281,6 +281,9 @@
                 <li><a href="#projects">projekty</a></li>
                 <li><a href="#contact">kontakt</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Přepnout světlý/tmavý režim">
+                <span class="theme-icon">🌙</span>
+            </button>
         </nav>
     </header>
 
@@ -354,6 +357,17 @@
                         <div class="card-glow"></div>
                         <h3>🏆 úspěchy</h3>
                         <p>5. místo na mezinárodním at&t online hackathonu 2025</p>
+                        <p>TryHackMe CTF "Industrial Intrusion" - <strong>39. místo z 6000+ účastníků</strong></p>
+                        <div class="certificate-container">
+                            <button class="certificate-button" id="certificateBtn">
+                                <div class="certificate-icon">🏅</div>
+                                <div class="certificate-content">
+                                    <span class="certificate-title">Zobrazit certifikát</span>
+                                    <span class="certificate-subtitle">Detaily soutěže a týmový úspěch</span>
+                                </div>
+                                <div class="certificate-arrow">→</div>
+                            </button>
+                        </div>
                     </div>
                     <div class="skill-item floating-card">
                         <div class="card-glow"></div>
@@ -481,6 +495,62 @@
             <p>YouTube: Za Odznakem • AT&T Hackathon 2025 • Hudební produkce</p>
         </div>
     </footer>
+
+    <!-- Certificate Modal -->
+    <div class="modal-overlay" id="certificateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏆 TryHackMe CTF Certifikát</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="certificate-details">
+                    <div class="certificate-header">
+                        <h4>Industrial Intrusion CTF</h4>
+                        <p class="achievement-rank">🥉 39. místo z téměř 6000 účastníků</p>
+                        <p class="achievement-desc">Mezinárodní týmová kybernetická soutěž zaměřená na průmyslovou bezpečnost a penetrační testování. Soutěžili jsme jako tým a dosáhli výborného výsledku v silné konkurenci.</p>
+                    </div>
+
+                    <div class="certificate-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">39</span>
+                            <span class="stat-label">Pořadí</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">6000</span>
+                            <span class="stat-label">Účastníků</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">Top 1%</span>
+                            <span class="stat-label">Výsledek</span>
+                        </div>
+                    </div>
+                    <div class="team-badge">
+                        <div class="team-icon">👥</div>
+                        <div class="team-text">
+                            <span class="team-label">Týmová soutěž</span>
+                            <span class="team-desc">Společný úspěch týmu</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-WYUK7NXKOJ.pdf" target="_blank" class="action-button primary">
+                        <span>Zobrazit certifikát</span>
+                        <div class="button-icon">📄</div>
+                    </a>
+                    <a href="https://www.linkedin.com/posts/david-chr%C3%A1steck%C3%BD-6b4316277_ctf-cybersecurity-tryhackme-activity-7349736443801411584-MLSO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAElnMzIBgFR1x1HM4S-emoJ7HeFphzHJ28U" target="_blank" class="action-button secondary">
+                        <span>Příspěvek LinkedIn</span>
+                        <div class="button-icon">🔗</div>
+                    </a>
+                    <button class="action-button secondary" id="shareBtn">
+                        <span>Sdílet úspěch</span>
+                        <div class="button-icon">📋</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
