@@ -1,0 +1,50 @@
+/* Reset & Base Styles */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Courier New', monospace;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    font-weight: 300;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Hide cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    *, *::before, *::after {
+        cursor: auto !important;
+    }
+    
+    a, button, input[type="range"], .nav-links a, .cta-button, .contact-button, .logo {
+        cursor: pointer !important;
+    }
+}
+
+/* Desktop only - show custom cursor */
+@media (hover: hover) and (pointer: fine) {
+    *, *::before, *::after {
+        cursor: none !important;
+    }
+    
+    a, button, input[type="range"], .nav-links a, .cta-button, .contact-button, .logo {
+        cursor: none !important;
+    }
+}

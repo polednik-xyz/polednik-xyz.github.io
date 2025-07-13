@@ -1,0 +1,119 @@
+/* Animations */
+
+@keyframes glitchText {
+    0%, 95% { transform: translateX(0); }
+    96% { transform: translateX(-2px) skew(-2deg); }
+    97% { transform: translateX(2px) skew(2deg); }
+    98% { transform: translateX(-1px) skew(1deg); }
+    99% { transform: translateX(1px) skew(-1deg); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes titleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes buttonFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0px) rotateX(0deg); }
+    50% { transform: translateY(-8px) rotateX(2deg); }
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: rgba(255, 255, 255, 0.5); }
+}
+
+@keyframes titleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes lineExpand {
+    from { width: 0; }
+    to { width: 80px; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatCode {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) translateX(0) rotate(0deg) scale(0.8);
+    }
+    15% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-50px) translateX(40px) rotate(8deg) scale(1.1);
+    }
+    85% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-250px) translateX(-30px) rotate(-8deg) scale(0.6);
+    }
+}
+
+@keyframes binaryFall {
+    0% {
+        opacity: 0;
+        transform: translateY(-150px) scale(0.5);
+    }
+    15% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+    85% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(calc(100vh + 150px)) scale(0.3);
+    }
+}
+
+.fade-in-text {
+    animation: fadeInUp 1s ease-out both;
+}
+
+.fade-in-text:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.fade-in-text:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animation assignments */
+.floating-code span { animation: floatCode 15s infinite linear; }
+.binary-rain span { animation: binaryFall 12s infinite linear; }
+.cta-button { animation: buttonFloat 4s ease-in-out infinite; }

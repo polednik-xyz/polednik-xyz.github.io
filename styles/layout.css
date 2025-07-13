@@ -1,0 +1,174 @@
+/* Layout Styles */
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: var(--gradient-hero);
+    scroll-margin-top: 0;
+    overflow: hidden;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    z-index: 2;
+    position: relative;
+}
+
+.hero h1 {
+    font-size: clamp(3rem, 10vw, 9rem);
+    margin-bottom: 2rem;
+    font-weight: 200;
+    letter-spacing: -0.05em;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    animation: glitchText 8s infinite, titleFloat 6s ease-in-out infinite;
+}
+
+.typing-text {
+    font-size: 1.25rem;
+    color: var(--text-tertiary);
+    margin-bottom: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.025em;
+    overflow: hidden;
+    border-right: 2px solid var(--text-secondary);
+    white-space: nowrap;
+    animation: typing 4s steps(40, end), blink-caret 1s step-end infinite;
+}
+
+/* Sections */
+section {
+    padding: 10rem 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.2s ease;
+    position: relative;
+}
+
+section:not(.hero) {
+    background: var(--gradient-section);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-size: 3rem;
+    margin-bottom: 6rem;
+    text-align: center;
+    font-weight: 200;
+    letter-spacing: -0.025em;
+    position: relative;
+    color: var(--text-primary);
+    animation: titleSlideIn 1s ease-out;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    box-shadow: 0 0 20px var(--accent-glow);
+    animation: lineExpand 1.5s ease-out 0.5s both;
+}
+
+/* Grids */
+.skills-grid,
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+    margin-top: 0;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8rem;
+    align-items: start;
+}
+
+.about-text p {
+    margin-bottom: 2.5rem;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+.about-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Contact */
+.contact-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact-content p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 4rem;
+    line-height: 1.7;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 4rem;
+    border-top: 1px solid var(--border-secondary);
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+}
+
+/* Background Elements */
+.floating-code,
+.binary-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-code span,
+.binary-rain span {
+    position: absolute;
+    color: var(--code-elements);
+    font-family: 'Monaco', 'Courier New', monospace;
+    opacity: 0;
+}
+
+.floating-particles,
+.grid-overlay,
+.terminal-cursor,
+.scan-lines {
+    position: absolute;
+    pointer-events: none;
+}
