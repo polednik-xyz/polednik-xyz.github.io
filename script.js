@@ -4,13 +4,13 @@ class CustomCursor {
         this.cursor = document.querySelector('.custom-cursor');
         this.cursorInner = document.querySelector('.cursor-inner');
         this.cursorOuter = document.querySelector('.cursor-outer');
-        this.hoverElements = document.querySelectorAll('a, button, input[type="range"], .nav-links a, .cta-button, .contact-button, .logo');
         
         this.mouseX = 0;
         this.mouseY = 0;
         this.outerX = 0;
         this.outerY = 0;
         this.isMoving = false;
+        this.isVisible = true;
         
         this.init();
     }
@@ -18,29 +18,26 @@ class CustomCursor {
     init() {
         if (!this.cursor) return;
         
+        // Initial setup
+        this.updateHoverElements();
+        
         document.addEventListener('mousemove', (e) => {
             this.mouseX = e.clientX;
             this.mouseY = e.clientY;
             this.isMoving = true;
             
-            this.cursorInner.style.left = this.mouseX + 'px';
-            this.cursorInner.style.top = this.mouseY + 'px';
+            if (this.isVisible) {
+                this.cursorInner.style.left = this.mouseX + 'px';
+                this.cursorInner.style.top = this.mouseY + 'px';
+            }
         });
         
         this.animateOuterCursor();
         
-        this.hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                this.cursor.classList.add('cursor-hover');
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                this.cursor.classList.remove('cursor-hover');
-            });
-        });
-        
         document.addEventListener('mousedown', () => {
-            this.cursor.classList.add('cursor-click');
+            if (this.isVisible) {
+                this.cursor.classList.add('cursor-click');
+            }
         });
         
         document.addEventListener('mouseup', () => {
@@ -49,15 +46,51 @@ class CustomCursor {
         
         document.addEventListener('mouseleave', () => {
             this.cursor.style.opacity = '0';
+            this.isVisible = false;
         });
         
         document.addEventListener('mouseenter', () => {
             this.cursor.style.opacity = '1';
+            this.isVisible = true;
         });
     }
     
+    updateHoverElements() {
+        // Remove old event listeners by cloning elements (if needed)
+        this.cursor.classList.remove('cursor-hover');
+        
+        // Get all interactive elements including modal elements
+        const hoverElements = document.querySelectorAll(`
+            a, button, input[type="range"], 
+            .nav-links a, .cta-button, .contact-button, .logo,
+            .certificate-button, .modal-close, .action-button, 
+            .stat-item, .team-badge, .play-btn, .info-icon,
+            .volume-icon, .progress-bar, .theme-toggle
+        `);
+        
+        hoverElements.forEach(element => {
+            // Remove existing listeners to prevent duplicates
+            element.removeEventListener('mouseenter', this.handleMouseEnter);
+            element.removeEventListener('mouseleave', this.handleMouseLeave);
+            
+            // Add new listeners
+            element.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
+            element.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+        });
+    }
+    
+    handleMouseEnter() {
+        if (this.isVisible) {
+            this.cursor.classList.add('cursor-hover');
+        }
+    }
+    
+    handleMouseLeave() {
+        this.cursor.classList.remove('cursor-hover');
+    }
+    
     animateOuterCursor() {
-        if (this.isMoving) {
+        if (this.isMoving && this.isVisible) {
             const lerp = 0.15;
             this.outerX += (this.mouseX - this.outerX) * lerp;
             this.outerY += (this.mouseY - this.outerY) * lerp;
@@ -71,6 +104,23 @@ class CustomCursor {
         }
         
         requestAnimationFrame(() => this.animateOuterCursor());
+    }
+    
+    // Method to refresh hover elements (called after modal opens/closes)
+    refresh() {
+        this.updateHoverElements();
+    }
+    
+    // Method to hide cursor temporarily
+    hide() {
+        this.cursor.style.opacity = '0';
+        this.isVisible = false;
+    }
+    
+    // Method to show cursor
+    show() {
+        this.cursor.style.opacity = '1';
+        this.isVisible = true;
     }
 }
 
@@ -292,8 +342,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize theme toggle first
     const themeToggle = new ThemeToggle();
     
+    // Initialize custom cursor for desktop devices only
+    let customCursor = null;
     if (window.matchMedia('(hover: hover)').matches) {
-        new CustomCursor();
+        customCursor = new CustomCursor();
+        
+        // Make cursor available globally for modal updates
+        window.customCursor = customCursor;
     }
     
     new MusicPlayer();
@@ -305,6 +360,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', () => {
         document.body.style.transition = 'opacity 0.5s ease';
         document.body.style.opacity = '1';
+        
+        // Refresh cursor after page load
+        if (customCursor) {
+            setTimeout(() => customCursor.refresh(), 100);
+        }
     });
     
     // Update header scroll handler to work with theme toggle
@@ -313,192 +373,196 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Certificate Modal Functionality
+// Certificate Modal Functionality - SIMPLIFIED AND FIXED
 document.addEventListener('DOMContentLoaded', function() {
     const certificateBtn = document.getElementById('certificateBtn');
     const certificateModal = document.getElementById('certificateModal');
     const modalClose = document.getElementById('modalClose');
     const shareBtn = document.getElementById('shareBtn');
 
-    // Check if elements exist before adding event listeners
-    if (!certificateBtn || !certificateModal || !modalClose || !shareBtn) return;
+    // Early exit if elements don't exist
+    if (!certificateBtn || !certificateModal || !modalClose || !shareBtn) {
+        console.log('Modal elements not found');
+        return;
+    }
 
-    // Variables for handling mobile scrolling
-    let initialScrollY = 0;
-    let modalContent = null;
+    console.log('Modal elements found, setting up...');
 
-    // Open modal
-    certificateBtn.addEventListener('click', function() {
-        certificateModal.classList.add('active');
-        
-        // Store current scroll position
-        initialScrollY = window.scrollY;
-        
-        // Get modal content element
-        modalContent = certificateModal.querySelector('.modal-content');
-        
-        // Apply mobile-specific fixes
-        if (isMobileDevice()) {
-            // Fix for iPhone viewport
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${initialScrollY}px`;
-            document.body.style.width = '100%';
-            
-            // Ensure modal content is scrollable
-            if (modalContent) {
-                modalContent.style.maxHeight = `${window.innerHeight - 60}px`;
-                modalContent.style.overflowY = 'auto';
-                modalContent.style.WebkitOverflowScrolling = 'touch';
-            }
-        } else {
+    // Detect touch device
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Simple scroll prevention
+    function preventBodyScroll(prevent) {
+        if (prevent) {
             document.body.style.overflow = 'hidden';
-        }
-        
-        // Add to custom cursor hover elements
-        const customCursor = document.querySelector('.custom-cursor');
-        if (customCursor) {
-            customCursor.classList.add('cursor-hover');
-        }
-    });
-
-    // Close modal
-    function closeModal() {
-        certificateModal.classList.remove('active');
-        
-        // Restore scroll position and body styles
-        if (isMobileDevice()) {
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.width = '';
-            window.scrollTo(0, initialScrollY);
         } else {
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Open modal function
+    function openModal(e) {
+        if (e) e.preventDefault();
+        console.log('Opening modal...');
+        
+        certificateModal.classList.add('active');
+        preventBodyScroll(true);
+        
+        // NEBUDEME skrývat cursor - chceme ho vidět nad modalem
+        // Pouze refreshneme hover elementy
+        if (window.customCursor && !isTouchDevice) {
+            setTimeout(() => {
+                window.customCursor.refresh();
+            }, 100);
         }
         
-        // Remove from custom cursor hover elements
-        const customCursor = document.querySelector('.custom-cursor');
-        if (customCursor) {
-            customCursor.classList.remove('cursor-hover');
+        // Focus on close button after animation
+        setTimeout(() => {
+            modalClose.focus();
+        }, 300);
+    }
+
+    // Close modal function
+    function closeModal(e) {
+        if (e) e.preventDefault();
+        console.log('Closing modal...');
+        
+        certificateModal.classList.remove('active');
+        preventBodyScroll(false);
+        
+        // Pouze refreshneme cursor po zavření
+        if (window.customCursor && !isTouchDevice) {
+            setTimeout(() => {
+                window.customCursor.refresh();
+            }, 100);
         }
+        
+        // Return focus to trigger button
+        setTimeout(() => {
+            certificateBtn.focus();
+        }, 100);
     }
 
-    // Detect mobile device
-    function isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-               window.matchMedia('(max-width: 768px)').matches ||
-               ('ontouchstart' in window);
-    }
-
+    // Event listeners - SIMPLIFIED
+    certificateBtn.addEventListener('click', openModal);
+    certificateBtn.addEventListener('touchend', openModal);
+    
     modalClose.addEventListener('click', closeModal);
+    modalClose.addEventListener('touchend', closeModal);
 
-    // Close modal when clicking outside
+    // Click/touch outside to close
     certificateModal.addEventListener('click', function(e) {
         if (e.target === certificateModal) {
-            closeModal();   
+            closeModal(e);
         }
     });
 
-    // Close modal with Escape key
+    // Keyboard support
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && certificateModal.classList.contains('active')) {
-            closeModal();
+        if (certificateModal.classList.contains('active') && e.key === 'Escape') {
+            closeModal(e);
         }
     });
 
-    // Enhanced scroll prevention for mobile
-    function preventBodyScroll(e) {
-        if (certificateModal.classList.contains('active')) {
-            // Allow scrolling inside modal content
-            if (modalContent && modalContent.contains(e.target)) {
-                return;
-            }
-            e.preventDefault();
-        }
-    }
-
-    // Add touch event listeners for mobile with proper handling
-    document.addEventListener('touchmove', preventBodyScroll, { passive: false });
-    document.addEventListener('wheel', preventBodyScroll, { passive: false });
-
-    // Share functionality with better error handling
-    shareBtn.addEventListener('click', function() {
-        const shareText = "🏆 Daniel Poledník - 39. místo z téměř 6000 účastníků na TryHackMe CTF 'Industrial Intrusion'! 🔒 #cybersecurity #CTF #TryHackMe";
+    // Share functionality - SIMPLIFIED
+    shareBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Share button clicked');
         
-        if (navigator.share) {
+        const shareText = "🏆 Daniel Poledník - 39. místo z téměř 6000 účastníků na TryHackMe CTF 'Industrial Intrusion'! 🔒 #cybersecurity #CTF #TryHackMe";
+        const shareUrl = window.location.href;
+        const fullShareText = shareText + ' ' + shareUrl;
+        
+        // Try native share first (mobile)
+        if (navigator.share && isTouchDevice) {
             navigator.share({
                 title: 'TryHackMe CTF Úspěch',
                 text: shareText,
-                url: window.location.href
+                url: shareUrl
             }).catch(err => {
-                console.log('Share failed:', err);
-                // Fallback to clipboard
-                copyToClipboard(shareText);
+                console.log('Native share failed:', err);
+                copyToClipboard(fullShareText);
             });
         } else {
-            copyToClipboard(shareText);
+            copyToClipboard(fullShareText);
         }
     });
 
+    // Clipboard functionality
     function copyToClipboard(text) {
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(text + ' ' + window.location.href).then(function() {
+        console.log('Copying to clipboard:', text);
+        
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function() {
                 showSuccessMessage();
-            }).catch(function() {
-                // Fallback for older browsers
-                fallbackCopyToClipboard(text + ' ' + window.location.href);
+            }).catch(function(err) {
+                console.log('Clipboard API failed:', err);
+                fallbackCopy(text);
             });
         } else {
-            fallbackCopyToClipboard(text + ' ' + window.location.href);
+            fallbackCopy(text);
         }
     }
 
-    function fallbackCopyToClipboard(text) {
+    function fallbackCopy(text) {
         const textArea = document.createElement('textarea');
         textArea.value = text;
         textArea.style.position = 'fixed';
         textArea.style.left = '-9999px';
         textArea.style.top = '-9999px';
-        textArea.style.opacity = '0';
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
-        textArea.setSelectionRange(0, 99999); // For mobile devices
         
         try {
-            document.execCommand('copy');
-            showSuccessMessage();
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showSuccessMessage();
+            } else {
+                showErrorMessage();
+            }
         } catch (err) {
-            console.error('Copy failed:', err);
+            console.error('Fallback copy failed:', err);
+            showErrorMessage();
+        } finally {
+            document.body.removeChild(textArea);
         }
-        document.body.removeChild(textArea);
     }
 
     function showSuccessMessage() {
-        const originalContent = shareBtn.innerHTML;
+        const originalHTML = shareBtn.innerHTML;
         shareBtn.innerHTML = '<span>Zkopírováno!</span><div class="button-icon">✓</div>';
         shareBtn.classList.add('success');
+        shareBtn.disabled = true;
+        
         setTimeout(() => {
-            shareBtn.innerHTML = originalContent;
+            shareBtn.innerHTML = originalHTML;
             shareBtn.classList.remove('success');
+            shareBtn.disabled = false;
         }, 2000);
     }
 
-    // Handle viewport changes on mobile (iPhone rotation, address bar)
-    function handleViewportChange() {
-        if (certificateModal.classList.contains('active') && modalContent) {
-            setTimeout(() => {
-                modalContent.style.maxHeight = `${window.innerHeight - 60}px`;
-            }, 100);
-        }
+    function showErrorMessage() {
+        const originalHTML = shareBtn.innerHTML;
+        shareBtn.innerHTML = '<span>Chyba</span><div class="button-icon">⚠️</div>';
+        
+        setTimeout(() => {
+            shareBtn.innerHTML = originalHTML;
+        }, 2000);
     }
 
-    window.addEventListener('resize', handleViewportChange);
-    window.addEventListener('orientationchange', handleViewportChange);
-    
-    // iPhone specific viewport fix
-    window.addEventListener('scroll', function() {
-        if (certificateModal.classList.contains('active') && isMobileDevice()) {
-            window.scrollTo(0, initialScrollY);
+    // Handle orientation changes
+    window.addEventListener('orientationchange', function() {
+        if (certificateModal.classList.contains('active')) {
+            setTimeout(() => {
+                // Reset modal position after orientation change
+                const modalContent = certificateModal.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.scrollTop = 0;
+                }
+            }, 500);
         }
     });
+
+    console.log('Modal setup complete');
 });

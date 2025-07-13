@@ -497,11 +497,11 @@
     </footer>
 
     <!-- Certificate Modal -->
-    <div class="modal-overlay" id="certificateModal">
+    <div class="modal-overlay" id="certificateModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>🏆 TryHackMe CTF Certifikát</h3>
-                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modal-title">🏆 TryHackMe CTF Certifikát</h3>
+                <button class="modal-close" id="modalClose" aria-label="Zavřít modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="certificate-details">
@@ -512,20 +512,20 @@
                     </div>
 
                     <div class="certificate-stats">
-                        <div class="stat-item">
+                        <div class="stat-item" tabindex="0">
                             <span class="stat-number">39</span>
                             <span class="stat-label">Pořadí</span>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" tabindex="0">
                             <span class="stat-number">6000</span>
                             <span class="stat-label">Účastníků</span>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" tabindex="0">
                             <span class="stat-number">Top 1%</span>
                             <span class="stat-label">Výsledek</span>
                         </div>
                     </div>
-                    <div class="team-badge">
+                    <div class="team-badge" tabindex="0">
                         <div class="team-icon">👥</div>
                         <div class="team-text">
                             <span class="team-label">Týmová soutěž</span>
@@ -535,15 +535,15 @@
                 </div>
                 
                 <div class="modal-actions">
-                    <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-WYUK7NXKOJ.pdf" target="_blank" class="action-button primary">
+                    <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-WYUK7NXKOJ.pdf" target="_blank" rel="noopener noreferrer" class="action-button primary">
                         <span>Zobrazit certifikát</span>
                         <div class="button-icon">📄</div>
                     </a>
-                    <a href="https://www.linkedin.com/posts/david-chr%C3%A1steck%C3%BD-6b4316277_ctf-cybersecurity-tryhackme-activity-7349736443801411584-MLSO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAElnMzIBgFR1x1HM4S-emoJ7HeFphzHJ28U" target="_blank" class="action-button secondary">
+                    <a href="https://www.linkedin.com/posts/david-chr%C3%A1steck%C3%BD-6b4316277_ctf-cybersecurity-tryhackme-activity-7349736443801411584-MLSO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAElnMzIBgFR1x1HM4S-emoJ7HeFphzHJ28U" target="_blank" rel="noopener noreferrer" class="action-button secondary">
                         <span>Příspěvek LinkedIn</span>
                         <div class="button-icon">🔗</div>
                     </a>
-                    <button class="action-button secondary" id="shareBtn">
+                    <button class="action-button secondary" id="shareBtn" type="button">
                         <span>Sdílet úspěch</span>
                         <div class="button-icon">📋</div>
                     </button>
