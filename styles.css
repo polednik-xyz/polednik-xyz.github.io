@@ -1952,7 +1952,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 20000; /* Vyšší než cursor (10000/10001) */
+    z-index: 20000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -2205,17 +2205,30 @@ footer {
     font-size: 14px;
 }
 
-/* Mobile optimizations */
+/* Mobile optimizations - VYLEPŠENÉ PRO IPHONE */
 @media (max-width: 768px) {
     .modal-overlay {
-        padding: 10px;
+        padding: 0;
         align-items: flex-start;
-        padding-top: 20px;
+        padding-top: 0;
+        /* Zajistí že modal je scrollovatelný na celé výšce */
+        min-height: 100vh;
+        min-height: 100dvh; /* Dynamic viewport height pro iOS */
     }
     
     .modal-content {
         padding: 20px 15px;
-        border-radius: 15px;
+        border-radius: 0 0 15px 15px;
+        max-height: none;
+        min-height: 100vh;
+        min-height: 100dvh; /* Dynamic viewport height pro iOS */
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        /* Lepší scrolling na iOS */
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
+        position: relative;
     }
     
     .certificate-stats {
@@ -2226,18 +2239,51 @@ footer {
     .modal-actions {
         flex-direction: column;
         gap: 8px;
+        margin-bottom: 40px; /* Více místa na konci pro pohodlné scrollování */
     }
     
     .action-button {
         width: 100%;
         min-width: auto;
     }
+    
+    /* Přidám více paddingu na spodek pro iOS safari */
+    .modal-body {
+        padding-bottom: 60px;
+    }
 }
 
 @media (max-width: 480px) {
+    .modal-overlay {
+        padding: 0;
+    }
+    
     .modal-content {
         padding: 15px 10px;
-        border-radius: 10px;
+        border-radius: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        /* Ujistím se že content je vždy scrollovatelný */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .modal-header {
+        flex-shrink: 0;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        position: sticky;
+        top: 0;
+        background: var(--bg-secondary);
+        z-index: 1;
+    }
+    
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 80px; /* Ještě více místa pro scroll na iPhone */
     }
     
     .modal-close {
@@ -2245,81 +2291,43 @@ footer {
         height: 35px;
         font-size: 24px;
     }
-}
-
-/* Touch device improvements */
-@media (hover: none) and (pointer: coarse) {
-    .certificate-button:hover {
-        transform: none;
-        box-shadow: none;
+    
+    .certificate-header h4 {
+        font-size: 20px;
+        margin-bottom: 8px;
     }
     
-    .certificate-button:active {
-        transform: scale(0.98);
-        background: var(--bg-card-hover);
+    .achievement-rank {
+        font-size: 16px;
+        margin-bottom: 12px;
     }
     
-    .action-button:hover {
-        transform: none;
-    }
-    
-    .action-button:active {
-        transform: scale(0.98);
-    }
-    
-    .modal-close:hover {
-        background: none;
-    }
-    
-    .modal-close:active {
-        background: var(--modal-button-bg);
+    .achievement-desc {
+        font-size: 14px;
+        margin-bottom: 20px;
     }
 }
 
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .modal-content {
-        border-width: 1px;
-    }
-    
-    .stat-item {
-        border-width: 1px;
-    }
-}
-
-/* Landscape orientation on mobile */
-@media (max-height: 600px) and (orientation: landscape) {
+/* Speciální optimalizace pro iOS Safari */
+@supports (-webkit-touch-callout: none) {
     .modal-overlay {
-        padding: 5px;
-        align-items: flex-start;
+        height: 100vh;
+        height: 100dvh;
     }
     
     .modal-content {
-        max-height: calc(100vh - 10px);
-        padding: 15px;
+        min-height: 100vh;
+        min-height: 100dvh;
+        -webkit-overflow-scrolling: touch;
     }
     
-    .modal-header {
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-    }
-    
-    .certificate-details {
-        gap: 15px;
-    }
-    
-    .certificate-stats {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin: 15px 0;
-    }
-    
-    .stat-item {
-        padding: 10px 8px;
-    }
-    
-    .modal-actions {
-        margin-top: 15px;
-        padding-top: 15px;
+    @media (max-width: 768px) {
+        .modal-content {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+        
+        .modal-body {
+            padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+        }
     }
 }

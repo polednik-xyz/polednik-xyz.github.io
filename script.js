@@ -416,9 +416,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         }
         
-        // Focus on close button after animation
+        // Focus management pro mobilní zařízení
         setTimeout(() => {
-            modalClose.focus();
+            if (isTouchDevice) {
+                // Na mobilu nefocusuj close button - může způsobit problémy s klávesnicí
+                const modalContent = certificateModal.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.scrollTop = 0;
+                }
+            } else {
+                modalClose.focus();
+            }
         }, 300);
     }
 
@@ -437,10 +445,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         }
         
-        // Return focus to trigger button
-        setTimeout(() => {
-            certificateBtn.focus();
-        }, 100);
+        // Return focus to trigger button pouze na desktopu
+        if (!isTouchDevice) {
+            setTimeout(() => {
+                certificateBtn.focus();
+            }, 100);
+        }
     }
 
     // Event listeners - SIMPLIFIED
@@ -551,16 +561,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     }
 
-    // Handle orientation changes
+    // Handle orientation changes - VYLEPŠENO PRO iOS
     window.addEventListener('orientationchange', function() {
         if (certificateModal.classList.contains('active')) {
+            // Počkej na dokončení změny orientace
             setTimeout(() => {
-                // Reset modal position after orientation change
                 const modalContent = certificateModal.querySelector('.modal-content');
                 if (modalContent) {
                     modalContent.scrollTop = 0;
+                    // Force reflow pro iOS
+                    modalContent.style.minHeight = window.innerHeight + 'px';
+                    requestAnimationFrame(() => {
+                        modalContent.style.minHeight = '';
+                    });
                 }
             }, 500);
+        }
+    });
+
+    // Přidám handling pro iOS viewport changes
+    window.addEventListener('resize', function() {
+        if (certificateModal.classList.contains('active') && isTouchDevice) {
+            const modalContent = certificateModal.querySelector('.modal-content');
+            if (modalContent) {
+                // Adjust height pro iOS keyboard/toolbar changes
+                requestAnimationFrame(() => {
+                    modalContent.style.minHeight = window.innerHeight + 'px';
+                });
+            }
         }
     });
 
