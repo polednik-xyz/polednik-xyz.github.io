@@ -340,7 +340,7 @@ nav {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: relative;
-    animation: glitchText 8s infinite, titleFloat 6s ease-in-out infinite;
+    animation: glitchText 2s infinite, titleFloat 6s ease-in-out infinite;
 }
 
 .hero h1::before,
@@ -358,12 +358,12 @@ nav {
 }
 
 .hero h1::before {
-    animation: glitchBefore 8s infinite;
+    animation: glitchBefore 2s infinite;
     z-index: -1;
 }
 
 .hero h1::after {
-    animation: glitchAfter 8s infinite;
+    animation: glitchAfter 2s infinite;
     z-index: -2;
 }
 
