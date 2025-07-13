@@ -363,6 +363,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Prevent body scroll when modal is open (mobile fix)
+    function preventBodyScroll(e) {
+        if (certificateModal.classList.contains('active')) {
+            e.preventDefault();
+        }
+    }
+
+    // Add touch event listeners for mobile
+    document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+
     // Share functionality with better error handling
     shareBtn.addEventListener('click', function() {
         const shareText = "🏆 Daniel Poledník - 39. místo z téměř 6000 účastníků na TryHackMe CTF 'Industrial Intrusion'! 🔒 #cybersecurity #CTF #TryHackMe";
@@ -398,19 +408,42 @@ document.addEventListener('DOMContentLoaded', function() {
     function fallbackCopyToClipboard(text) {
         const textArea = document.createElement('textarea');
         textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '-9999px';
         document.body.appendChild(textArea);
+        textArea.focus();
         textArea.select();
-        document.execCommand('copy');
+        try {
+            document.execCommand('copy');
+            showSuccessMessage();
+        } catch (err) {
+            console.error('Copy failed:', err);
+        }
         document.body.removeChild(textArea);
-        showSuccessMessage();
     }
 
     function showSuccessMessage() {
+        const originalContent = shareBtn.innerHTML;
         shareBtn.innerHTML = '<span>Zkopírováno!</span><div class="button-icon">✓</div>';
         shareBtn.classList.add('success');
         setTimeout(() => {
-            shareBtn.innerHTML = '<span>Sdílet úspěch</span><div class="button-icon">📋</div>';
+            shareBtn.innerHTML = originalContent;
             shareBtn.classList.remove('success');
         }, 2000);
     }
+
+    // Handle viewport changes on mobile
+    function handleViewportChange() {
+        if (certificateModal.classList.contains('active')) {
+            // Recalculate modal position if needed
+            const modalContent = certificateModal.querySelector('.modal-content');
+            if (modalContent) {
+                modalContent.style.maxHeight = `${window.innerHeight - 40}px`;
+            }
+        }
+    }
+
+    window.addEventListener('resize', handleViewportChange);
+    window.addEventListener('orientationchange', handleViewportChange);
 });
