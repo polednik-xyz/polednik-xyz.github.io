@@ -323,10 +323,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if elements exist before adding event listeners
     if (!certificateBtn || !certificateModal || !modalClose || !shareBtn) return;
 
+    // Variables for handling mobile scrolling
+    let initialScrollY = 0;
+    let modalContent = null;
+
     // Open modal
     certificateBtn.addEventListener('click', function() {
         certificateModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        
+        // Store current scroll position
+        initialScrollY = window.scrollY;
+        
+        // Get modal content element
+        modalContent = certificateModal.querySelector('.modal-content');
+        
+        // Apply mobile-specific fixes
+        if (isMobileDevice()) {
+            // Fix for iPhone viewport
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${initialScrollY}px`;
+            document.body.style.width = '100%';
+            
+            // Ensure modal content is scrollable
+            if (modalContent) {
+                modalContent.style.maxHeight = `${window.innerHeight - 60}px`;
+                modalContent.style.overflowY = 'auto';
+                modalContent.style.WebkitOverflowScrolling = 'touch';
+            }
+        } else {
+            document.body.style.overflow = 'hidden';
+        }
         
         // Add to custom cursor hover elements
         const customCursor = document.querySelector('.custom-cursor');
@@ -338,13 +364,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close modal
     function closeModal() {
         certificateModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        
+        // Restore scroll position and body styles
+        if (isMobileDevice()) {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, initialScrollY);
+        } else {
+            document.body.style.overflow = 'auto';
+        }
         
         // Remove from custom cursor hover elements
         const customCursor = document.querySelector('.custom-cursor');
         if (customCursor) {
             customCursor.classList.remove('cursor-hover');
         }
+    }
+
+    // Detect mobile device
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+               window.matchMedia('(max-width: 768px)').matches ||
+               ('ontouchstart' in window);
     }
 
     modalClose.addEventListener('click', closeModal);
@@ -363,15 +405,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Prevent body scroll when modal is open (mobile fix)
+    // Enhanced scroll prevention for mobile
     function preventBodyScroll(e) {
         if (certificateModal.classList.contains('active')) {
+            // Allow scrolling inside modal content
+            if (modalContent && modalContent.contains(e.target)) {
+                return;
+            }
             e.preventDefault();
         }
     }
 
-    // Add touch event listeners for mobile
+    // Add touch event listeners for mobile with proper handling
     document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+    document.addEventListener('wheel', preventBodyScroll, { passive: false });
 
     // Share functionality with better error handling
     shareBtn.addEventListener('click', function() {
@@ -411,9 +458,12 @@ document.addEventListener('DOMContentLoaded', function() {
         textArea.style.position = 'fixed';
         textArea.style.left = '-9999px';
         textArea.style.top = '-9999px';
+        textArea.style.opacity = '0';
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
+        textArea.setSelectionRange(0, 99999); // For mobile devices
+        
         try {
             document.execCommand('copy');
             showSuccessMessage();
@@ -433,17 +483,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     }
 
-    // Handle viewport changes on mobile
+    // Handle viewport changes on mobile (iPhone rotation, address bar)
     function handleViewportChange() {
-        if (certificateModal.classList.contains('active')) {
-            // Recalculate modal position if needed
-            const modalContent = certificateModal.querySelector('.modal-content');
-            if (modalContent) {
-                modalContent.style.maxHeight = `${window.innerHeight - 40}px`;
-            }
+        if (certificateModal.classList.contains('active') && modalContent) {
+            setTimeout(() => {
+                modalContent.style.maxHeight = `${window.innerHeight - 60}px`;
+            }, 100);
         }
     }
 
     window.addEventListener('resize', handleViewportChange);
     window.addEventListener('orientationchange', handleViewportChange);
+    
+    // iPhone specific viewport fix
+    window.addEventListener('scroll', function() {
+        if (certificateModal.classList.contains('active') && isMobileDevice()) {
+            window.scrollTo(0, initialScrollY);
+        }
+    });
 });
