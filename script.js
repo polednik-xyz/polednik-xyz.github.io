@@ -1,12 +1,11 @@
-// Fallback pro prohlížeče bez ES6 module podpory
-// Import components
-import { CustomCursor } from './js/components/cursor.js';
-import { MusicPlayer } from './js/components/music-player.js';
-import { ThemeToggle } from './js/components/theme-toggle.js';
-import { ModalManager } from './js/components/modal.js';
-import { ScrollProgress } from './js/utils/scroll-progress.js';
-import { SectionAnimator } from './js/utils/section-animator.js';
-import { SmoothScroll } from './js/utils/smooth-scroll.js';
+// Main JavaScript file - initialize everything
+import { CustomCursor } from './components/cursor.js';
+import { MusicPlayer } from './components/music-player.js';
+import { ThemeToggle } from './components/theme-toggle.js';
+import { ModalManager } from './components/modal.js';
+import { ScrollProgress } from './utils/scroll-progress.js';
+import { SectionAnimator } from './utils/section-animator.js';
+import { SmoothScroll } from './utils/smooth-scroll.js';
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
